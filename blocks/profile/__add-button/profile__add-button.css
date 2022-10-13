@@ -1,0 +1,36 @@
+.profile__add-button {
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 0;
+  width: 150px;
+  height: 50px;
+  background-color: #000;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .4s;
+}
+
+.profile__add-button:hover {
+  opacity: .6;
+}
+
+.profile__add-button::before {
+  content: url('../../../images/plus.svg');
+  max-width: 22px;
+  max-height: 22px;
+}
+
+@media screen and (max-width: 760px) {
+  .profile__add-button {
+    width: 282px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .profile__add-button {
+    margin: 0 auto;
+  }
+}

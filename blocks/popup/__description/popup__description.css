@@ -1,0 +1,13 @@
+.popup__description {
+  display: block;
+  margin: 30px auto 0;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  outline: none;
+  width: 100%;
+}
