@@ -4,33 +4,28 @@
   padding: 0;
   width: 150px;
   height: 50px;
-  background-color: #000;
+  background-color: transparent;
   border: 2px solid #fff;
   border-radius: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: .4s;
+  background-image: url('../../../images/plus.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-size: 22px 22px;
 }
 
 .profile__add-button:hover {
   opacity: .6;
 }
 
-.profile__add-button::before {
-  content: url('../../../images/plus.svg');
-  max-width: 22px;
-  max-height: 22px;
-}
-
-@media screen and (max-width: 760px) {
-  .profile__add-button {
-    width: 282px;
-  }
-}
-
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 670px) {
   .profile__add-button {
     margin: 0 auto;
+    background-size: 16px;
+    width: 282px;
   }
 }

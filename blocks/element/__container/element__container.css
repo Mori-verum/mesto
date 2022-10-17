@@ -1,7 +1,9 @@
 .element__container {
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
   max-width: 246px;
   align-items: center;
-  margin: 25px 15px 31px 21px;
+  padding: 25px 20px;
+  border-radius: 0 0 10px 10px;
 }
