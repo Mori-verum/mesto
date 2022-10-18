@@ -9,8 +9,7 @@ const userDescription = document.querySelector('.profile__about');
 const elements = document.querySelectorAll('.element');
 
 function changeVisibility() {
-  if(popup.classList.contains('popup_opened')) {
-  } else {
+  if(!popup.classList.contains('popup_opened')) {
     nameInput.value = userName.textContent;
     jobInput.value = userDescription.textContent;
   }
@@ -29,9 +28,3 @@ popupClose.addEventListener('click', changeVisibility);
 }
 
 formElement.addEventListener('submit', formSubmitHandler);
-
-for (let element of elements) {
-const cardImage = element.querySelector('.element .element__image');
-const cardDescription = element.querySelector('.element .element__description').textContent;
-cardImage.setAttribute('alt', cardDescription);
-}
