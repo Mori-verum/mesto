@@ -23,6 +23,7 @@ const PostUrlInput = addPostFormElem.elements.popupUrlImg;
 const cardsContainer = document.querySelector('.elements');
 const cardForm = document.forms.addPostForm;
 
+const postTemplate = document.getElementById('post-template');
 const initialCards = [
   {
     name: 'Кто-то прекрасный',
@@ -85,12 +86,8 @@ function formSubmitHandler(evt) {
 editFormElem.addEventListener('submit', formSubmitHandler);
 
 /*Логика добавления поста */
-
-const postTemplate = document.getElementById('post-template');
-
 const getPostElem = (nameCard, linkCard) => {
   const elem = postTemplate.content.cloneNode(true).children[0];
-  console.log(elem);
 
 const cardDescription = elem.querySelector('.element__description');
 cardDescription.textContent = nameCard;
@@ -98,21 +95,30 @@ const cardImg = elem.querySelector('.element__image');
 cardImg.setAttribute('src', linkCard);
 
 return elem;
-
 }
+
+/* Обработчики на карточке */
+const likeHandler = (event) => {
+ event.target.classList.toggle('element__like-button_enabled');
+}
+
+const deleteHandler = (event) => {
+  const currentCardElem = event.target.closest('.element');
+
+  currentCardElem.remove();
+}
+
+ const setEventListeners = (elem) => {
+    const elemLikeBtn = elem.querySelector('.element__like-button');
+    elemLikeBtn.addEventListener('click', likeHandler);
+    const elemDeleteBtn = elem.querySelector('.element__delete-button');
+    elemDeleteBtn.addEventListener('click', deleteHandler);
+  }
 
 const renderPostElem = (card) => {
   const elem = getPostElem(card.name, card.link);
-  /* Прикрутили лайк */
-const elemLikeBtn = elem.querySelector('.element__like-button');
-elemLikeBtn.addEventListener('click', (event) => {
-  event.target.classList.toggle('element__like-button_enabled');
-});
-/* Прикрутили корзину */
-const elemRemoveBtn = elem.querySelector('.element__delete-button');
-elemRemoveBtn.addEventListener('click', () => {
-  elem.remove.closest('div');
-});
+
+  setEventListeners(elem);
 
   cardsContainer.prepend(elem);
 }
