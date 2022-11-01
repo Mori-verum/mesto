@@ -20,11 +20,15 @@ const addPostFormElem = document.forms.addPostForm;
 const PostTextInput = addPostFormElem.elements.popupPostText;
 const PostUrlInput = addPostFormElem.elements.popupUrlImg;
 
-const cardsContainer = document.querySelector('.elements');
-const cardForm = document.forms.addPostForm;
+const postsContainer = document.querySelector('.elements');
+const postForm = document.forms.addPostForm;
 
 const postTemplate = document.getElementById('post-template');
-const initialCards = [
+
+const popupViewPost = document.querySelector('.popup_view-post');
+const closeViewPostBtn = popupViewPost.querySelector('.popup__close-button');
+
+const initialPosts = [
   {
     name: 'Кто-то прекрасный',
     link: 'https://images.unsplash.com/photo-1666933000057-bd414f5e214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
@@ -64,7 +68,7 @@ openEditBtn.addEventListener('click', editChangeVisibility);
 closeEditBtn.addEventListener('click', editChangeVisibility);
 
 /* Открытие и закрытие попапов - Добавление поста */
-function addPostchangeVisibility() {
+function addPostChangeVisibility() {
   if (!popupAddPost.classList.contains('popup_opened')) {
     PostTextInput.value = '';
     PostUrlInput.value = '';
@@ -72,8 +76,15 @@ function addPostchangeVisibility() {
   popupAddPost.classList.toggle('popup_opened');
 }
 
-openAddPostBtn.addEventListener('click', addPostchangeVisibility);
-closeAddPostBtn.addEventListener('click', addPostchangeVisibility);
+openAddPostBtn.addEventListener('click', addPostChangeVisibility);
+closeAddPostBtn.addEventListener('click', addPostChangeVisibility);
+
+/* Открытие и закрытие попапов - Просмотр поста */
+function viewPostChangeVisibility() {
+  popupViewPost.classList.toggle('popup_opened');
+}
+
+closeViewPostBtn.addEventListener('click', viewPostChangeVisibility);
 
 /* Заполнение профиля */
 function formSubmitHandler(evt) {
@@ -86,13 +97,14 @@ function formSubmitHandler(evt) {
 editFormElem.addEventListener('submit', formSubmitHandler);
 
 /*Логика добавления поста */
-const getPostElem = (nameCard, linkCard) => {
+const getPostElem = (postName, postLink) => {
   const elem = postTemplate.content.cloneNode(true).children[0];
 
-const cardDescription = elem.querySelector('.element__description');
-cardDescription.textContent = nameCard;
-const cardImg = elem.querySelector('.element__image');
-cardImg.setAttribute('src', linkCard);
+const postDescription = elem.querySelector('.element__description');
+postDescription.textContent = postName;
+const postImg = elem.querySelector('.element__image');
+postImg.setAttribute('src', postLink);
+postImg.setAttribute('alt', postName);
 
 return elem;
 }
@@ -103,9 +115,21 @@ const likeHandler = (event) => {
 }
 
 const deleteHandler = (event) => {
-  const currentCardElem = event.target.closest('.element');
+  const currentPostElem = event.target.closest('.element');
 
-  currentCardElem.remove();
+  currentPostElem.remove();
+}
+
+const viewHandler = (event) => {
+  viewPostChangeVisibility();
+const popupImg = popupViewPost.querySelector('.popup__image');
+const popupImgTitle = popupViewPost.querySelector('.popup__img-title');
+console.log(popupImgTitle);
+const imageSource = event.target.getAttribute('src');
+const imageAlt = event.target.getAttribute('alt');
+popupImg.setAttribute('src', imageSource);
+popupImg.setAttribute('alt', imageAlt);
+popupImgTitle.textContent = imageAlt;
 }
 
  const setEventListeners = (elem) => {
@@ -113,27 +137,30 @@ const deleteHandler = (event) => {
     elemLikeBtn.addEventListener('click', likeHandler);
     const elemDeleteBtn = elem.querySelector('.element__delete-button');
     elemDeleteBtn.addEventListener('click', deleteHandler);
+    const elemViewImgBtn = elem.querySelector('.element__image');
+    elemViewImgBtn.addEventListener('click', viewHandler)
   }
 
-const renderPostElem = (card) => {
-  const elem = getPostElem(card.name, card.link);
+ /* Рендеринг карточки */
+const renderPostElem = (post) => {
+  const elem = getPostElem(post.name, post.link);
 
   setEventListeners(elem);
 
-  cardsContainer.prepend(elem);
+  postsContainer.prepend(elem);
 }
 
-initialCards.forEach(renderPostElem);
+initialPosts.forEach(renderPostElem);
 
-cardForm.addEventListener('submit', (event) => {
+postForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const dataPost = {
-    name: cardForm.elements.popupPostText.value,
-    link: cardForm.elements.popupUrlImg.value
+    name: postForm.elements.popupPostText.value,
+    link: postForm.elements.popupUrlImg.value
   };
-  initialCards.push(dataPost);
+  initialPosts.push(dataPost);
   renderPostElem(dataPost);
-  addPostchangeVisibility()
+  addPostChangeVisibility()
 });
 
