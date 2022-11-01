@@ -1,4 +1,4 @@
-.element__button {
+.element__like-button {
   width: 22px;
   height: 19px;
   background-color: transparent;
@@ -12,10 +12,9 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-
 }
 
-.element__button:hover {
+.element__like-button:hover {
   cursor: pointer;
   opacity: .6;
 }

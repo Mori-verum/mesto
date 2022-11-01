@@ -24,61 +24,40 @@
       <button aria-label="Добавить пост" type="button" class="profile__add-button"></button>
     </section>
     <section class="elements" aria-label="Посты">
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Карачаевск</h2>
-          <button aria-label="Лайк" type="button" class="element__button">
-          </button>
-        </div>
-      </article>
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Гора Эльбрус</h2>
-          <button aria-label="Лайк" type="button" class="element__button"></button>
-        </div>
-      </article>
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/dombay.jpg" alt="Домбай" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Домбай</h2>
-          <button aria-label="Лайк" type="button" class="element__button"></button>
-        </div>
-      </article>
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Карачаевск</h2>
-          <button aria-label="Лайк" type="button" class="element__button"></button>
-        </div>
-      </article>
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/dombay.jpg" alt="Домбай" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Домбаййййййййййй</h2>
-          <button aria-label="Лайк" type="button" class="element__button"></button>
-        </div>
-      </article>
-      <article aria-label="Карточка с фото" class="element">
-        <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-        <div class="element__container">
-          <h2 class="element__description">Гора Эльбрус</h2>
-          <button aria-label="Лайк" type="button" class="element__button"></button>
-        </div>
-      </article>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <template id="post-template">
+    <article aria-label="Карточка с фото" class="element">
+      <button aria-label="Удалить пост" type="button" class="element__delete-button">
+      </button>
+      <img src="#" alt="Гора Эльбрус" class="element__image">
+      <div class="element__container">
+        <h2 class="element__description"></h2>
+        <button aria-label="Лайк" type="button" class="element__like-button"></button>
+      </div>
+    </article>
+  </template>
+  <div class="popup popup_edit">
     <div class="popup__container">
       <form name="settingProfileForm" class="popup__form">
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input required placeholder="Введите имя" type="text" name="popup__username" class="popup__input popup__input_margin_big">
-        <input required placeholder="Введите описание" type="text" name="popup__description" class="popup__input popup__input_margin_small">
-        <button type="submit" class="popup__submit">Сохранить</button>
+        <input required placeholder="Введите имя" type="text" name="popupUsername" class="popup__input popup__input_margin_big">
+        <input required placeholder="Введите описание" type="text" name="popupDescription" class="popup__input popup__input_margin_small">
+        <button type="submit" class="popup__submit popup__submit_edit">Сохранить</button>
+      </form>
+      <button aria-label="Закрыть модальное окно" type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+  <div class="popup popup_add-post">
+    <div class="popup__container">
+      <form name="addPostForm" class="popup__form">
+        <h2 class="popup__title">Новое место</h2>
+        <input required placeholder="Название" type="text" name="popupPostText" class="popup__input popup__input_margin_big">
+        <input required placeholder="Ссылка на картинку" type="text" name="popupUrlImg" class="popup__input popup__input_margin_small">
+        <button type="submit" class="popup__submit popup__submit_add-post">Создать</button>
       </form>
       <button aria-label="Закрыть модальное окно" type="button" class="popup__close-button"></button>
     </div>
