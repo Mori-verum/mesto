@@ -1,6 +1,7 @@
+const popupCloseBtns = document.querySelectorAll('.popup__close-button');
+
 const openEditBtn = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_edit');
-const closeEditBtn = popupEdit.querySelector('.popup__close-button');
 
 const editFormElem = document.forms.settingProfileForm;
 
@@ -13,20 +14,20 @@ const userDescription = document.querySelector('.profile__about');
 
 const openAddPostBtn = document.querySelector('.profile__add-button');
 const popupAddPost = document.querySelector('.popup_add-post');
-const closeAddPostBtn = popupAddPost.querySelector('.popup__close-button');
 
 const addPostFormElem = document.forms.addPostForm;
 
-const PostTextInput = addPostFormElem.elements.popupPostText;
-const PostUrlInput = addPostFormElem.elements.popupUrlImg;
+const postTextInput = addPostFormElem.elements.popupPostText;
+const postUrlInput = addPostFormElem.elements.popupUrlImg;
 
 const postsContainer = document.querySelector('.elements');
 const postForm = document.forms.addPostForm;
 
 const postTemplate = document.getElementById('post-template');
 
-const popupViewPost = document.querySelector('.popup_view-post');
-const closeViewPostBtn = popupViewPost.querySelector('.popup__close-button');
+const popupViewingPost = document.querySelector('.popup_view-post');
+const popupImg = popupViewingPost.querySelector('.popup__image');
+const popupImgTitle = popupViewingPost.querySelector('.popup__img-title');
 
 const initialPosts = [
   {
@@ -55,98 +56,104 @@ const initialPosts = [
   }
 ];
 
+/* Открытие и закрытие попапов (универсальное) */
+const openPopup = popup => {
+  popup.classList.add('popup_opened');
+}
+const closePopup = popup => {
+  popup.classList.remove('popup_opened');
+}
+
+popupCloseBtns.forEach ((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popup));
+});
+
 /* Открытие и закрытие попапов - Профиль */
-function editChangeVisibility() {
+function openPopupEdit() {
   if (!popupEdit.classList.contains('popup_opened')) {
     nameInput.value = userName.textContent;
     jobInput.value = userDescription.textContent;
   }
-  popupEdit.classList.toggle('popup_opened');
+  openPopup(popupEdit);
 }
 
-openEditBtn.addEventListener('click', editChangeVisibility);
-closeEditBtn.addEventListener('click', editChangeVisibility);
+function closePopupEdit() {
+  closePopup(popupEdit);
+}
+
+openEditBtn.addEventListener('click', openPopupEdit);
 
 /* Открытие и закрытие попапов - Добавление поста */
-function addPostChangeVisibility() {
-  if (!popupAddPost.classList.contains('popup_opened')) {
-    PostTextInput.value = '';
-    PostUrlInput.value = '';
-  }
-  popupAddPost.classList.toggle('popup_opened');
+function openPopupAddPost() {
+  openPopup(popupAddPost);
 }
 
-openAddPostBtn.addEventListener('click', addPostChangeVisibility);
-closeAddPostBtn.addEventListener('click', addPostChangeVisibility);
+function closePopupAddPost() {
+  closePopup(popupAddPost);
+}
+
+openAddPostBtn.addEventListener('click', openPopupAddPost);
 
 /* Открытие и закрытие попапов - Просмотр поста */
-function viewPostChangeVisibility() {
-  popupViewPost.classList.toggle('popup_opened');
+function openPopupViewingPost() {
+  openPopup(popupViewingPost);
 }
 
-closeViewPostBtn.addEventListener('click', viewPostChangeVisibility);
-
 /* Заполнение профиля */
-function formSubmitHandler(evt) {
+function changeProfileData(evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value;
   userDescription.textContent = jobInput.value;
-  editChangeVisibility();
+  closePopupEdit();
 }
 
-editFormElem.addEventListener('submit', formSubmitHandler);
-
-/*Логика добавления поста */
-const getPostElem = (postName, postLink) => {
-  const elem = postTemplate.content.cloneNode(true).children[0];
-
-const postDescription = elem.querySelector('.element__description');
-postDescription.textContent = postName;
-const postImg = elem.querySelector('.element__image');
-postImg.setAttribute('src', postLink);
-postImg.setAttribute('alt', postName);
-
-return elem;
-}
+editFormElem.addEventListener('submit', changeProfileData);
 
 /* Обработчики на карточке */
-const likeHandler = (event) => {
- event.target.classList.toggle('element__like-button_enabled');
+const handleLike = (event) => {
+  event.target.classList.toggle('element__like-button_enabled');
 }
 
-const deleteHandler = (event) => {
+const handleDelete = (event) => {
   const currentPostElem = event.target.closest('.element');
 
   currentPostElem.remove();
 }
 
-const viewHandler = (event) => {
-  viewPostChangeVisibility();
-const popupImg = popupViewPost.querySelector('.popup__image');
-const popupImgTitle = popupViewPost.querySelector('.popup__img-title');
-console.log(popupImgTitle);
-const imageSource = event.target.getAttribute('src');
-const imageAlt = event.target.getAttribute('alt');
-popupImg.setAttribute('src', imageSource);
-popupImg.setAttribute('alt', imageAlt);
-popupImgTitle.textContent = imageAlt;
+const handlePostViewing = (event) => {
+  openPopupViewingPost();
+  const imageSource = event.target.getAttribute('src');
+  const imageAlt = event.target.getAttribute('alt');
+  popupImg.setAttribute('src', imageSource);
+  popupImg.setAttribute('alt', imageAlt);
+  popupImgTitle.textContent = imageAlt;
 }
 
- const setEventListeners = (elem) => {
-    const elemLikeBtn = elem.querySelector('.element__like-button');
-    elemLikeBtn.addEventListener('click', likeHandler);
-    const elemDeleteBtn = elem.querySelector('.element__delete-button');
-    elemDeleteBtn.addEventListener('click', deleteHandler);
-    const elemViewImgBtn = elem.querySelector('.element__image');
-    elemViewImgBtn.addEventListener('click', viewHandler)
-  }
+const setEventListeners = (elem) => {
+  const elemLikeBtn = elem.querySelector('.element__like-button');
+  elemLikeBtn.addEventListener('click', handleLike);
+  const elemDeleteBtn = elem.querySelector('.element__delete-button');
+  elemDeleteBtn.addEventListener('click', handleDelete);
+  const elemViewImgBtn = elem.querySelector('.element__image');
+  elemViewImgBtn.addEventListener('click', handlePostViewing)
+}
 
- /* Рендеринг карточки */
+/*Логика добавления поста */
+const getPostElem = (postName, postLink) => {
+  const elem = postTemplate.content.cloneNode(true).children[0];
+  const postDescription = elem.querySelector('.element__description');
+  postDescription.textContent = postName;
+  const postImg = elem.querySelector('.element__image');
+  postImg.setAttribute('src', postLink);
+  postImg.setAttribute('alt', postName);
+  setEventListeners(elem);
+  return elem;
+}
+
+/* Рендеринг карточки */
 const renderPostElem = (post) => {
   const elem = getPostElem(post.name, post.link);
-
-  setEventListeners(elem);
-
   postsContainer.prepend(elem);
 }
 
@@ -159,8 +166,8 @@ postForm.addEventListener('submit', (event) => {
     name: postForm.elements.popupPostText.value,
     link: postForm.elements.popupUrlImg.value
   };
-  initialPosts.push(dataPost);
   renderPostElem(dataPost);
-  addPostChangeVisibility()
+  closePopupAddPost();
+  event.target.reset();
 });
 
