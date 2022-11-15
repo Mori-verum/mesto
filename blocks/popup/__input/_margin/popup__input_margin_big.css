@@ -1,9 +1,9 @@
 .popup__input_margin_big {
-  margin-top: 54px;
+  margin-top: 24px;
 }
 
 @media screen and (max-width: 600px) {
   .popup__input_margin_big {
-    margin-top: 75px;
+    margin-top: 45px;
   }
 }
