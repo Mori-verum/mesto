@@ -1,5 +1,7 @@
 const popupCloseBtns = document.querySelectorAll('.popup__close-button');
 
+const popupList = document.querySelectorAll('.popup');
+
 const openEditBtn = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_edit');
 
@@ -29,45 +31,34 @@ const popupViewingPost = document.querySelector('.popup_view-post');
 const popupImg = popupViewingPost.querySelector('.popup__image');
 const popupImgTitle = popupViewingPost.querySelector('.popup__img-title');
 
-const initialPosts = [
-  {
-    name: 'Кто-то прекрасный',
-    link: 'https://images.unsplash.com/photo-1666933000057-bd414f5e214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Коровки домой пошлёпали',
-    link: 'https://images.unsplash.com/photo-1667116233639-66cd95894b4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=749&q=80'
-  },
-  {
-    name: 'Покатушки',
-    link: 'https://images.unsplash.com/photo-1666858094442-6b2a6592bdf8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Холодный парень',
-    link: 'https://images.unsplash.com/photo-1667115199649-645cfe0dcd87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Что-то на уютном',
-    link: 'https://images.unsplash.com/photo-1667114790658-0afc31212d8e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: '#Ошки',
-    link: 'https://images.unsplash.com/photo-1666934209832-2c3cd4356740?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80'
-  }
-];
-
 /* Открытие и закрытие попапов (универсальное) */
 const openPopup = popup => {
   popup.classList.add('popup_opened');
-}
+};
 const closePopup = popup => {
   popup.classList.remove('popup_opened');
-}
+};
 
-popupCloseBtns.forEach ((button) => {
-  const popup = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popup));
+popupCloseBtns.forEach ((closeButton) => {
+  const popup = closeButton.closest('.popup');
+  closeButton.addEventListener('click', () => closePopup(popup));
 });
+
+popupList.forEach((popup) => {popup.addEventListener('mousedown', (evt) => {
+  if (evt.target === evt.currentTarget) {
+    closePopup(popup);
+  }
+});
+}
+);
+
+popupList.forEach((popup) => {document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(popup);
+  }
+});
+}
+);
 
 /* Открытие и закрытие попапов - Профиль */
 function openPopupEdit() {
@@ -113,13 +104,13 @@ editFormElem.addEventListener('submit', changeProfileData);
 /* Обработчики на карточке */
 const handleLike = (event) => {
   event.target.classList.toggle('element__like-button_enabled');
-}
+};
 
 const handleDelete = (event) => {
   const currentPostElem = event.target.closest('.element');
 
   currentPostElem.remove();
-}
+};
 
 const handlePostViewing = (event) => {
   openPopupViewingPost();
@@ -128,16 +119,16 @@ const handlePostViewing = (event) => {
   popupImg.setAttribute('src', imageSource);
   popupImg.setAttribute('alt', imageAlt);
   popupImgTitle.textContent = imageAlt;
-}
+};
 
-const setEventListeners = (elem) => {
+const setCardEventListeners = (elem) => {
   const elemLikeBtn = elem.querySelector('.element__like-button');
   elemLikeBtn.addEventListener('click', handleLike);
   const elemDeleteBtn = elem.querySelector('.element__delete-button');
   elemDeleteBtn.addEventListener('click', handleDelete);
   const elemViewImgBtn = elem.querySelector('.element__image');
   elemViewImgBtn.addEventListener('click', handlePostViewing)
-}
+};
 
 /*Логика добавления поста */
 const getPostElem = (postName, postLink) => {
@@ -147,15 +138,15 @@ const getPostElem = (postName, postLink) => {
   const postImg = elem.querySelector('.element__image');
   postImg.setAttribute('src', postLink);
   postImg.setAttribute('alt', postName);
-  setEventListeners(elem);
+  setCardEventListeners(elem);
   return elem;
-}
+};
 
 /* Рендеринг карточки */
 const renderPostElem = (post) => {
   const elem = getPostElem(post.name, post.link);
   postsContainer.prepend(elem);
-}
+};
 
 initialPosts.forEach(renderPostElem);
 
@@ -169,5 +160,8 @@ postForm.addEventListener('submit', (event) => {
   renderPostElem(dataPost);
   closePopupAddPost();
   event.target.reset();
+  enableValidation(selectors);
 });
+
+
 
