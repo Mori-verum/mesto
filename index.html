@@ -42,7 +42,7 @@
   </template>
   <div class="popup popup_edit">
     <div class="popup__container">
-      <form name="settingProfileForm" class="popup__form">
+      <form name="settingProfileForm" novalidate class="popup__form">
         <h2 class="popup__title">Редактировать профиль</h2>
         <section class="popup__form-section">
         <input required placeholder="Введите имя" type="text" name="popupUsername"
@@ -61,7 +61,7 @@
   </div>
   <div class="popup popup_add-post">
     <div class="popup__container">
-      <form name="addPostForm" class="popup__form">
+      <form name="addPostForm" novalidate class="popup__form">
         <h2 class="popup__title">Новое место</h2>
         <section class="popup__form-section">
         <input required placeholder="Название" type="text" name="popupPostText"
@@ -69,8 +69,8 @@
           <span class="popup__input-error" id="post-text-error"></span>
         </section>
         <section class="popup__form-section">
-        <input required placeholder="Ссылка на картинку" type="text" name="popupUrlImg"
-          class="popup__input" required type="url">
+        <input type="url" required placeholder="Ссылка на картинку" type="text" name="popupUrlImg"
+          class="popup__input" required>
           <span class="popup__input-error" id="link-error"></span>
         </section>
         <button type="submit" class="popup__submit popup__submit_add-post">Создать</button>
@@ -87,8 +87,8 @@
       <figcaption class="popup__img-title"></figcaption>
     </figure>
   </div>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
-  ,<script src="./scripts/validate.js"></script>
 </body>
 
 </html>

@@ -10,4 +10,6 @@
   width: 100%;
 }
 
-
+.popup__input:invalid {
+  border-bottom: 1px solid #f00;
+}
