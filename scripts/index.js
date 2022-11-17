@@ -66,6 +66,11 @@ function openPopupEdit() {
     hideInputError(inputErrorElem, selectors);
   });
 
+  const inputList = profileForm.querySelectorAll('.popup__input');
+  inputList.forEach((input) => {
+    hideInputInvalidStatus(input);
+  });
+
   blockSubmit(BtnSubmitDataProfile, selectors);
 
   openPopup(popupEdit);
@@ -74,8 +79,6 @@ function openPopupEdit() {
 function closePopupEdit() {
   closePopup(popupEdit);
 }
-
-
 
 /* Открытие и закрытие попапов - Добавление поста */
 function openPopupAddPost() {
