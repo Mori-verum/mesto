@@ -24,3 +24,13 @@ const initialPosts = [
     link: 'https://images.unsplash.com/photo-1666934209832-2c3cd4356740?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80'
   }
 ];
+
+const selectors = {
+  formSectionSelector: '.popup__form-section',
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  inputErrorSelector: '.popup__input-error',
+  inputErrorActiveClass: 'popup__input-error_active',
+  submitSelector: '.popup__submit',
+  inactiveSubmitClass: 'popup__submit_inactive'
+}
