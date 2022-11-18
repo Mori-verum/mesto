@@ -1,9 +1,11 @@
-const showInputInvalidStatus = (input) => {
-  input.classList.add('popup__input_invalid');
+const showInputInvalidStatus = (errorElement, inputElem, input, selectors) => {
+  showInputError(errorElement, inputElem.validationMessage, selectors);
+  input.classList.add(selectors.invalidinputClass);
 }
 
-const hideInputInvalidStatus = (input) => {
-  input.classList.remove('popup__input_invalid');
+const hideInputInvalidStatus = (errorElement, input, selectors) => {
+  hideInputError(errorElement, selectors);
+  input.classList.remove(selectors.invalidinputClass);
 }
 
 const checkInputValidity = (inputElem, selectors) => {
@@ -13,11 +15,9 @@ const checkInputValidity = (inputElem, selectors) => {
   const input = formSection.querySelector(selectors.inputSelector);
 
   if (isValid) {
-    hideInputError(errorElement, selectors);
-    hideInputInvalidStatus(input);
+    hideInputInvalidStatus(errorElement, input, selectors);
   } else {
-    showInputError(errorElement, inputElem.validationMessage, selectors);
-    showInputInvalidStatus(input);
+    showInputInvalidStatus(errorElement, inputElem, input, selectors);
   }
 }
 

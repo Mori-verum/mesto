@@ -61,16 +61,12 @@ function openPopupEdit() {
     jobInput.value = userDescription.textContent;
   }
 
-  const inputElems = profileForm.querySelectorAll('.popup__input-error');
-  inputElems.forEach((inputErrorElem) => {
-    hideInputError(inputErrorElem, selectors);
-  });
 
-  const inputList = profileForm.querySelectorAll('.popup__input');
-  inputList.forEach((input) => {
-    hideInputInvalidStatus(input);
-  });
-
+   const inputList = profileForm.querySelectorAll('.popup__input');
+   inputList.forEach((inputElem) => {
+    checkInputValidity(inputElem, selectors);
+   })
+   
   blockSubmit(BtnSubmitDataProfile, selectors);
 
   openPopup(popupEdit);

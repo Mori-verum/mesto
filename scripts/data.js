@@ -32,5 +32,6 @@ const selectors = {
   inputErrorSelector: '.popup__input-error',
   inputErrorActiveClass: 'popup__input-error_active',
   submitSelector: '.popup__submit',
-  inactiveSubmitClass: 'popup__submit_inactive'
+  inactiveSubmitClass: 'popup__submit_inactive',
+  invalidinputClass: 'popup__input_invalid'
 }
