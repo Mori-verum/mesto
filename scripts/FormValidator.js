@@ -1,5 +1,5 @@
 export default class FormValidator {
-  constructor (selectors, popup) {
+  constructor(selectors, popup) {
     this._popup = popup;
     this._formSelector = selectors.formSelector;
     this._formSectionSelector = selectors.formSectionSelector;

@@ -109,12 +109,12 @@ function openPopupEdit() {
   }
 
 
-   const inputList = profileForm.querySelectorAll('.popup__input');
-   inputList.forEach((inputElem) => {
+  const inputList = profileForm.querySelectorAll('.popup__input');
+  inputList.forEach((inputElem) => {
     formValidatorEdit.checkInputValidity(inputElem, selectors);
-   })
+  })
 
-   formValidatorEdit.blockSubmit(BtnSubmitDataProfile, selectors);
+  formValidatorEdit.blockSubmit(BtnSubmitDataProfile, selectors);
 
   openPopup(popupEdit);
 }

@@ -16,10 +16,10 @@ export default class Card {
 
   _getElem = () => {
     this._elem = document
-    .querySelector(this._templateSelector)
-    .content
-    .cloneNode(true)
-    .children[0];
+      .querySelector(this._templateSelector)
+      .content
+      .cloneNode(true)
+      .children[0];
   }
 
   _handleLike = (btnLike) => {
