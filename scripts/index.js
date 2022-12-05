@@ -1,3 +1,5 @@
+import Card from './Card.js';
+
 const btnsPopupClose = document.querySelectorAll('.popup__close-button');
 
 const popupList = document.querySelectorAll('.popup');
@@ -21,14 +23,9 @@ const BtnSubmitDataPost = document.querySelector('.popup__submit_add-post')
 
 const formAddPost = document.forms.addPostForm;
 
-const postTextInput = formAddPost.elements.popupPostText;
-const postUrlInput = formAddPost.elements.popupUrlImg;
-
 const postsContainer = document.querySelector('.elements');
 
 const popupViewingPost = document.querySelector('.popup_view-post');
-const popupImg = popupViewingPost.querySelector('.popup__image');
-const popupImgTitle = popupViewingPost.querySelector('.popup__img-title');
 
 /* Открытие и закрытие попапов (универсальное) */
 function closeByEsc(evt) {
@@ -104,16 +101,16 @@ btnOpenAddPost.addEventListener('click', openPopupAddPost);
 
 profileForm.addEventListener('submit', changeProfileData);
 
-formAddPost.addEventListener('submit', (event) => {
-  event.preventDefault();
+formAddPost.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
   const dataPost = {
     name: formAddPost.elements.popupPostText.value,
     link: formAddPost.elements.popupUrlImg.value
   };
-  new Card(dataPost.name, dataPost.link, 'post-card-template').render();
+  new Card(dataPost, 'post-card-template', popupViewingPost, openPopupViewingPost).render(postsContainer);
   closePopupAddPost();
-  event.target.reset();
+  evt.target.reset();
 });
 
 /* Вызов функций и запуск циклов*/
@@ -126,11 +123,9 @@ popupList.forEach((popup) => {
 }
 );
 
-// initialPosts.forEach(renderPostElem);
-
 
 initialPosts.forEach(post => {
-  new Card(post.name, post.link, 'post-card-template').render();
+  new Card(post, 'post-card-template', popupViewingPost, openPopupViewingPost).render(postsContainer);
 });
 
 

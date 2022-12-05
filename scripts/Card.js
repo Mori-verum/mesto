@@ -1,39 +1,50 @@
-class Card {
-  constructor(text, link, templateId) {
-    this._text = text;
-    this._link = link;
-    this._templateId = templateId;
+export default class Card {
+  constructor(data, templateSelector, popup, openPopupViewingPost) {
+    this._name = data.name;
+    this._link = data.link;
+    this._popup = popup;
+    this._openPopupViewingPost = openPopupViewingPost;
+    this._templateId = templateSelector;
   }
 
-  _handleLike = (event) => {
-    event.target.classList.toggle('element__like-button_enabled');
+  _getElem = () => {
+    this._elem = document
+    .querySelector('#post-card-template')
+    .content
+    .cloneNode(true)
+    .children[0];
+  }
+
+  _handleLike = (evt) => {
+    evt.target.classList.toggle('element__like-button_enabled');
   }
 
   _handleDelete = () => {
-    this._view.remove();
+    this._elem.remove();
   }
 
   _handlePostViewing = () => {
-    popupImg.setAttribute('src', this._link);
-    popupImg.setAttribute('alt', this._text);
-    popupImgTitle.textContent = this._text;
-    openPopupViewingPost();
+    this._popupImage = this._popup.querySelector('.popup__image');
+    this._popupImage.src = this._link;
+    this._popupImage.alt = this._name;
+    this._popup.querySelector('.popup__img-title').textContent = this._name;
+    this._openPopupViewingPost();
   }
 
   _setCardEventListeners = () => {
-    this._view.querySelector('.element__like-button').addEventListener('click', this._handleLike);
-    this._view.querySelector('.element__delete-button').addEventListener('click', this._handleDelete);
+    this._elem.querySelector('.element__like-button').addEventListener('click', this._handleLike);
+    this._elem.querySelector('.element__delete-button').addEventListener('click', this._handleDelete);
     this._image.addEventListener('click', this._handlePostViewing)
   }
 
-  render = () => {
-    this._view = document.getElementById(this._templateId).content.cloneNode(true).children[0];
-    this._view.querySelector('.element__description').textContent = this._text;
-    this._image = this._view.querySelector('.element__image');
-    this._image.setAttribute('src', this._link);
-    this._image.setAttribute('alt', this._text);
+  render = (container) => {
+    this._getElem();
+    this._elem.querySelector('.element__description').textContent = this._name;
+    this._image = this._elem.querySelector('.element__image');
+    this._image.src = this._link;
+    this._image.alt = this._name;
     this._setCardEventListeners();
-    postsContainer.prepend(this._view);
+    container.prepend(this._elem);
 
 
   }
