@@ -49,6 +49,8 @@ const formAddPost = document.forms.addPostForm;
 const postsContainer = document.querySelector('.elements');
 
 const popupViewingPost = document.querySelector('.popup_view-post');
+const popupImage = popupViewingPost.querySelector('.popup__image');
+const popupImageTitle = popupViewingPost.querySelector('.popup__img-title');
 
 const formValidatorEdit = new FormValidator(selectors, profileForm);
 const formValidatorAddPost = new FormValidator(selectors, formAddPost);
@@ -72,10 +74,8 @@ const closePopup = popup => {
 
 /* Открытие и закрытие попапов - Профиль */
 function openPopupEdit() {
-  if (!popupEdit.classList.contains('popup_opened')) {
-    nameInput.value = userName.textContent;
-    jobInput.value = userDescription.textContent;
-  }
+  nameInput.value = userName.textContent;
+  jobInput.value = userDescription.textContent;
   formValidatorEdit.resetValidation();
 
   openPopup(popupEdit);
@@ -96,8 +96,6 @@ function closePopupAddPost() {
 
 /* Открытие и закрытие попапов - Просмотр поста */
 function openPopupViewingPost(name, link) {
-  const popupImage = popupViewingPost.querySelector('.popup__image');
-  const popupImageTitle = popupViewingPost. querySelector('.popup__img-title');
   popupImage.src = link;
   popupImage.alt = name;
   popupImageTitle.textContent = name;
