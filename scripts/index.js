@@ -1,32 +1,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import { initialPosts } from './data.js';
 
-const initialPosts = [
-  {
-    name: 'Кто-то прекрасный',
-    link: 'https://images.unsplash.com/photo-1666933000057-bd414f5e214e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Коровки домой пошлёпали',
-    link: 'https://images.unsplash.com/photo-1667116233639-66cd95894b4b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=749&q=80'
-  },
-  {
-    name: 'Покатушки',
-    link: 'https://images.unsplash.com/photo-1666858094442-6b2a6592bdf8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Холодный парень',
-    link: 'https://images.unsplash.com/photo-1667115199649-645cfe0dcd87?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: 'Что-то на уютном',
-    link: 'https://images.unsplash.com/photo-1667114790658-0afc31212d8e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
-  },
-  {
-    name: '#Ошки',
-    link: 'https://images.unsplash.com/photo-1666934209832-2c3cd4356740?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80'
-  }
-];
 
 const selectors = {
   popup: '.popup_view-post',
@@ -46,7 +21,7 @@ const selectors = {
   inputErrorActiveClass: 'popup__input-error_active',
   submitSelector: '.popup__submit',
   inactiveSubmitClass: 'popup__submit_inactive',
-  invalidinputClass: 'popup__input_invalid'
+  invalidInputClass: 'popup__input_invalid'
 }
 
 const btnsPopupClose = document.querySelectorAll('.popup__close-button');
@@ -55,7 +30,6 @@ const popupList = document.querySelectorAll('.popup');
 
 const btnOpenProfile = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_edit');
-const BtnSubmitDataProfile = document.querySelector('.popup__submit_edit');
 
 const profileForm = document.forms.settingProfileForm;
 
@@ -68,7 +42,7 @@ const userDescription = document.querySelector('.profile__about');
 
 const btnOpenAddPost = document.querySelector('.profile__add-button');
 const popupAddPost = document.querySelector('.popup_add-post');
-const BtnSubmitDataPost = document.querySelector('.popup__submit_add-post')
+const btnSubmitDataPost = document.querySelector('.popup__submit_add-post')
 
 const formAddPost = document.forms.addPostForm;
 
@@ -76,8 +50,8 @@ const postsContainer = document.querySelector('.elements');
 
 const popupViewingPost = document.querySelector('.popup_view-post');
 
-const formValidatorEdit = new FormValidator(selectors, popupEdit);
-const formValidatorAddPost = new FormValidator(selectors, popupAddPost);
+const formValidatorEdit = new FormValidator(selectors, profileForm);
+const formValidatorAddPost = new FormValidator(selectors, formAddPost);
 
 /* Открытие и закрытие попапов (универсальное) */
 function closeByEsc(evt) {
@@ -96,25 +70,13 @@ const closePopup = popup => {
   document.removeEventListener('keydown', closeByEsc);
 };
 
-btnsPopupClose.forEach((closeButton) => {
-  const popup = closeButton.closest('.popup');
-  closeButton.addEventListener('click', () => closePopup(popup));
-});
-
 /* Открытие и закрытие попапов - Профиль */
 function openPopupEdit() {
   if (!popupEdit.classList.contains('popup_opened')) {
     nameInput.value = userName.textContent;
     jobInput.value = userDescription.textContent;
   }
-
-
-  const inputList = profileForm.querySelectorAll('.popup__input');
-  inputList.forEach((inputElem) => {
-    formValidatorEdit.checkInputValidity(inputElem, selectors);
-  })
-
-  formValidatorEdit.blockSubmit(BtnSubmitDataProfile, selectors);
+  formValidatorEdit.resetValidation();
 
   openPopup(popupEdit);
 }
@@ -133,24 +95,34 @@ function closePopupAddPost() {
 }
 
 /* Открытие и закрытие попапов - Просмотр поста */
-function openPopupViewingPost() {
+function openPopupViewingPost(name, link) {
+  const popupImage = popupViewingPost.querySelector('.popup__image');
+  const popupImageTitle = popupViewingPost. querySelector('.popup__img-title');
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupImageTitle.textContent = name;
   openPopup(popupViewingPost);
 }
 
 /* Заполнение профиля */
-function changeProfileData(evt) {
+function handleProfileSubmit(evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value;
   userDescription.textContent = jobInput.value;
   closePopupEdit();
 }
 
+/* Добавление поста */
+function addPost(data, container) {
+  const card = new Card(data, '#post-card-template', selectors, openPopupViewingPost).createCard();
+  container.prepend(card);
+}
 /* Слушатели */
 btnOpenProfile.addEventListener('click', openPopupEdit);
 btnOpenAddPost.addEventListener('click', openPopupAddPost);
 
 
-profileForm.addEventListener('submit', changeProfileData);
+profileForm.addEventListener('submit', handleProfileSubmit);
 formAddPost.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
@@ -158,15 +130,20 @@ formAddPost.addEventListener('submit', (evt) => {
     name: formAddPost.elements.popupPostText.value,
     link: formAddPost.elements.popupUrlImg.value
   };
-  new Card(dataPost, '#post-card-template', selectors, popupViewingPost, openPopupViewingPost).render(postsContainer);
+  addPost(dataPost, postsContainer);
   closePopupAddPost();
   evt.target.reset();
-  formValidatorAddPost.blockSubmit(BtnSubmitDataPost, selectors);
+  formValidatorAddPost.blockSubmit(btnSubmitDataPost, selectors);
 });
 
 /* Вызов функций и запуск циклов*/
 formValidatorEdit.enableValidation();
 formValidatorAddPost.enableValidation();
+
+btnsPopupClose.forEach((closeButton) => {
+  const popup = closeButton.closest('.popup');
+  closeButton.addEventListener('click', () => closePopup(popup));
+});
 
 popupList.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
@@ -177,9 +154,8 @@ popupList.forEach((popup) => {
 }
 );
 
-
 initialPosts.forEach(post => {
-  new Card(post, '#post-card-template', selectors, popupViewingPost, openPopupViewingPost).render(postsContainer);
+  addPost(post, postsContainer);
 });
 
 
