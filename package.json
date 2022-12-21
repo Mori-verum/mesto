@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "* Описание\r * Figma\r * Реализация\r * GitHub Pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mori-verum/mesto.git"
+  },
+  "author": "Anastasia Selivokhina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mori-verum/mesto/issues"
+  },
+  "homepage": "https://github.com/Mori-verum/mesto#readme"
+}

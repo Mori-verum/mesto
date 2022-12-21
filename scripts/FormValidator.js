@@ -19,10 +19,6 @@ export default class FormValidator {
 
   resetValidation = () => {
     this.blockSubmit(this._submitBtn);
-    this._inputList.forEach((input) => {
-      this._checkInputValidity(input);
-    })
-
   }
 
   _showInputInvalidStatus = (errorElement, input) => {
