@@ -15,8 +15,8 @@ export default class Card {
     this._elem = document
       .querySelector(this._templateSelector)
       .content
+      .querySelector('.element')
       .cloneNode(true)
-      .children[0];
   }
 
   _handleLike = (btnLike) => {

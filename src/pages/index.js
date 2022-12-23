@@ -34,7 +34,7 @@ const userInfo = new UserInfo(userName, userDescription);
 
 
 function createCard(data) {
-  const card = new Card(data, '.post-card-template', selectorsForCard, openPopupViewingPost);
+  const card = new Card(data, '#post-card-template', selectorsForCard, openPopupViewingPost);
   return card.createCard();
 }
 
