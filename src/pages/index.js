@@ -1,11 +1,11 @@
-import './pages/index.css';
+import './index.css';
 
-import Card from './scripts/Card.js';
-import FormValidator from './scripts/FormValidator.js';
-import Section from './scripts/Section.js';
-import PopupWithImage from './scripts/PopupWithImage.js';
-import PopupWithForm from './scripts/PopupWithForm.js';
-import UserInfo from './scripts/UserInfo.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 import {
   initialPosts,
   selectorsForCard,
@@ -22,7 +22,7 @@ import {
   formAddPost,
   postsContainer,
   popupWithImageSelector
-} from './utils/constants.js'
+} from '../utils/constants.js'
 
 const cardSection = new Section({ items: initialPosts, renderer: addCard }, postsContainer);
 const formValidatorEdit = new FormValidator(selectorsForValidation, profileForm);
@@ -34,13 +34,18 @@ const userInfo = new UserInfo(userName, userDescription);
 
 
 function createCard(data) {
-  const card = new Card(data, '#post-card-template', selectorsForCard, openPopupViewingPost);
+  const card = new Card(data, '.post-card-template', selectorsForCard, openPopupViewingPost);
   return card.createCard();
 }
 
 function addCard(data) {
   const cardElement = createCard(data);
   cardSection.addItem(cardElement);
+}
+
+function openPopupAddPost() {
+  formValidatorAddPost.resetValidation();
+  popupAddPost.open();
 }
 
 function openPopupEdit() {
@@ -61,7 +66,7 @@ function submitDataProfile(data) {
 
 
 btnOpenProfile.addEventListener('click', openPopupEdit);
-btnOpenAddPost.addEventListener('click', () => popupAddPost.open());
+btnOpenAddPost.addEventListener('click', openPopupAddPost);
 
 cardSection.renderItems();
 
