@@ -9,7 +9,9 @@
 
 /*Стили для profile*/
 @import url('../blocks/profile/profile.css');
-@import url('../blocks/profile/__avatar/profile__avatar.css');
+@import url('../blocks/profile/__avatar-container/profile__avatar-container.css');
+@import url('../blocks/profile/__avatar-icon/profile__avatar-icon.css');
+@import url('../blocks/profile/__avatar-img/profile__avatar-img.css');
 @import url('../blocks/profile/__info/profile__info.css');
 @import url('../blocks/profile/__username/profile__username.css');
 @import url('../blocks/profile/__about/profile__about.css');
@@ -24,8 +26,10 @@
 @import url('../blocks/element/__image/element__image.css');
 @import url('../blocks/element/__container/element__container.css');
 @import url('../blocks/element/__description/element__description.css');
+@import url('../blocks/element/__column/element__column.css');
 @import url('../blocks/element/__like-button/element__like-button.css');
 @import url('../blocks/element/__like-button/_enabled/element__like-button_enabled.css');
+@import url('../blocks/element/__like-counter/element__like-counter.css');
 @import url('../blocks/element/__delete-button/element__delete-button.css');
 
 /*Стили для footer*/

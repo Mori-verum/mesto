@@ -4,6 +4,7 @@
   justify-content: space-between;
   max-width: 246px;
   align-items: center;
-  padding: 25px 20px;
+  height: 72px;
+  padding: 0 20px;
   border-radius: 0 0 10px 10px;
 }
