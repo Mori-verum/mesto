@@ -42,7 +42,7 @@ const formValidatorEditAvatar = new FormValidator(selectorsForValidation, editAv
 const popupWithImage = new PopupWithImage(popupWithImageSelector);
 const popupEdit = new PopupWithForm(popupEditSelector, submitDataProfile);
 const popupAddPost = new PopupWithForm(popupAddPostSelector, submitDataCard);
-const popupDelete = new Popup(popupDeleteSelector);
+const popupDelete = new PopupWithForm(popupDeleteSelector);
 const popupEditAvatar = new PopupWithForm(popupEditAvatarSelector, submitEditAvatar);
 
 const cardsList = new Section(
@@ -69,13 +69,14 @@ const cards = api.getAllCards();
 function createCard(data) {
   const card = new Card(data, '#post-card-template', selectorsForCard, openPopupViewingPost, userId, (id) => {
     popupDelete.open();
-    const delBtn = document.querySelector('.popup_opened').querySelector('.popup__submit_delete');
-    delBtn.addEventListener('click', () => api.deleteCard(id).then(res => {
-      popupDelete.close();
-      card.deletePost();
-    })).catch((err) => {
-      console.log(err);
-    });
+    popupDelete.overrideHandleSubmitForm(() => {
+      api.deleteCard(id).then(res => {
+        popupDelete.close();
+        card.deletePost();
+      }).catch((err) => {
+        console.log(err);
+      })
+    })
   }, (id) => {
     if (card.isLiked()) {
       api.deleteLike(id).then(res => {
