@@ -1,13 +1,13 @@
 const selectorsForCard = {
-  popup: '.popup_view-post',
-  popupImg: '.popup__image',
-  popupImgTitle: '.popup__img-title',
+  popupSelector: '.popup_view-post',
+  popupImgSelector: '.popup__image',
+  popupImgTitleSelector: '.popup__img-title',
   btnLikeEnabledClass: 'element__like-button_enabled',
-  btnLike: '.element__like-button',
-  btnDelete: '.element__delete-button',
-  elemDescription: '.element__description',
-  elemImage: '.element__image',
-  elemLikeCounter: '.element__like-counter'
+  btnLikeSelector: '.element__like-button',
+  btnDeleteSelector: '.element__delete-button',
+  elemDescriptionSelector: '.element__description',
+  elemImageSelector: '.element__image',
+  elemLikeCounterSelector: '.element__like-counter'
 }
 
 const selectorsForValidation = {
@@ -23,11 +23,8 @@ const selectorsForValidation = {
 
 const btnEditAvatar = document.querySelector('.profile__avatar-icon');
 const btnOpenProfile = document.querySelector('.profile__edit-button');
-const popupEditSelector = document.querySelector('.popup_edit');
-const popupEditAvatarSelector = document.querySelector('.popup_edit-avatar');
 
 const editAvatarForm = document.forms.editAvatarForm;
-const avatarLinkInput = editAvatarForm.elements.link;
 
 const profileForm = document.forms.settingProfileForm;
 
@@ -39,15 +36,10 @@ const userDescription = document.querySelector('.profile__about');
 const userAvatar = document.querySelector('.profile__avatar-img');
 
 const btnOpenAddPost = document.querySelector('.profile__add-button');
-const popupAddPostSelector = document.querySelector('.popup_add-post');
 
 const formAddPost = document.forms.addPostForm;
 
 const postsContainer = document.querySelector('.elements');
-
-const popupWithImageSelector = document.querySelector('.popup_view-post');
-
-const popupDeleteSelector = document.querySelector('.popup_delete');
 
 
 export {
@@ -55,10 +47,7 @@ export {
   selectorsForValidation,
   btnEditAvatar,
   btnOpenProfile,
-  popupEditSelector,
-  popupEditAvatarSelector,
   editAvatarForm,
-  avatarLinkInput,
   profileForm,
   nameInput,
   jobInput,
@@ -66,9 +55,6 @@ export {
   userDescription,
   userAvatar,
   btnOpenAddPost,
-  popupAddPostSelector,
   formAddPost,
   postsContainer,
-  popupWithImageSelector,
-  popupDeleteSelector
 };

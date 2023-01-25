@@ -1,9 +1,8 @@
 export default class Section {
-  constructor({ items, renderer }, selector, api) {
+  constructor({ items, renderer }, postContainer) {
     this._items = items;
     this._renderer = renderer;
-    this._container = selector;
-    this._api = api;
+    this._container = postContainer;
   }
 
   renderItems() {
@@ -11,12 +10,6 @@ export default class Section {
     this._items.forEach(item => {
       this._renderer(item);
     });
-  }
-
-  saveItem(data) {
-    this._api
-    .addCard({name: data.name, link: data.link})
-    .then((data) => console.log(data))
   }
 
   addItem(itemHtml) {

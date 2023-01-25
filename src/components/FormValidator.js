@@ -18,7 +18,11 @@ export default class FormValidator {
   }
 
   resetValidation = () => {
-    this.blockSubmit(this._submitBtn);
+    this.blockSubmit();
+    this._inputList.forEach((inputElement) => {
+      const error = inputElement.parentNode.querySelector(this._inputErrorSelector);
+      this._hideInputInvalidStatus(error, inputElement)
+    });
   }
 
   _showInputInvalidStatus = (errorElement, input) => {
