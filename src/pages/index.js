@@ -69,9 +69,7 @@ Promise.all([api.getDataProfile(), api.getAllCards()])
   console.log(userData)
   userInfo.setUserInfo(userData);
   userId = userData._id;
-  cards.forEach(item => {
-          addCard(item);
-        })
+  cardsList.renderItems(cards);
 })
 .catch((err) => {
   console.log(err);
@@ -100,6 +98,9 @@ function createCard(data) {
     } else {
       api.addLike(id).then(res => {
         card.setLikesCounter(res.likes)
+      })
+      .catch((err) => {
+        console.log(err);
       });
     }
   })
